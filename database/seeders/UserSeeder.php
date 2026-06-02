@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
             'name' => 'Parent Test',
             'email' => 'parent@test.com',
             'password' => Hash::make('123456'),
-            'account_type' => 'parent',
             'pin_parent' => '1234',
         ]);
 
@@ -27,7 +26,6 @@ class UserSeeder extends Seeder
             'name' => 'Child Test',
             'email' => 'child@test.com',
             'password' => Hash::make('123456'),
-            'account_type' => 'child',
             'parent_id' => $parent->id,
         ]);
     }

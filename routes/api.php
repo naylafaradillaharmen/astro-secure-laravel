@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
@@ -8,9 +7,8 @@ use App\Http\Controllers\Api\ScheduleController;
 use App\Http\Controllers\Api\TaskSubmissionController;
 use App\Http\Controllers\Api\ScreenTimeRuleController;
 use App\Http\Controllers\Api\ScreenTimeLogController;
-use App\Http\Controllers\Api\RewardRequestController;
-use App\Http\Controllers\Api\RewardResponseController;
 use App\Http\Controllers\Api\ChildProgressController;
+use App\Http\Controllers\Api\DailyRewardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,25 +70,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Reward Requests
-    |--------------------------------------------------------------------------
-    */
-
-    Route::apiResource('reward-requests', RewardRequestController::class);
-
-    /*
-    |--------------------------------------------------------------------------
-    | Reward Responses
-    |--------------------------------------------------------------------------
-    */
-
-    Route::apiResource('reward-responses', RewardResponseController::class);
-
-    /*
-    |--------------------------------------------------------------------------
     | Child Progress
     |--------------------------------------------------------------------------
     */
 
     Route::apiResource('child-progress', ChildProgressController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Daily Rewards
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/daily-rewards/today', [DailyRewardController::class, 'today']);
+
+    Route::apiResource('daily-rewards', DailyRewardController::class);
 });

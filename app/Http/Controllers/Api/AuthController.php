@@ -21,14 +21,12 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'account_type' => 'required|in:parent,child',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'account_type' => $request->account_type,
             'pin_parent' => $request->pin_parent,
             'parent_id' => $request->parent_id,
         ]);

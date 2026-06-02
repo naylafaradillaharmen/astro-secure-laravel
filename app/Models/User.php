@@ -19,7 +19,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'account_type',
         'pin_parent',
         'parent_id',
     ];
@@ -96,22 +95,6 @@ class User extends Authenticatable
     public function screenTimeLogs()
     {
         return $this->hasMany(ScreenTimeLog::class, 'child_id');
-    }
-
-    /**
-     * Reward requests
-     */
-    public function rewardRequests()
-    {
-        return $this->hasMany(RewardRequest::class, 'child_id');
-    }
-
-    /**
-     * Reward responses
-     */
-    public function rewardResponses()
-    {
-        return $this->hasMany(RewardResponse::class, 'parent_id');
     }
 
     /**

@@ -18,7 +18,6 @@ class Schedule extends Model
         'title',
         'description',
         'start_time',
-        'end_time',
         'repeat_type',
     ];
 

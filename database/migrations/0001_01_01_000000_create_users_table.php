@@ -16,10 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-
-            // parent atau child
-            $table->enum('account_type', ['parent', 'child']);
-
+            
             // PIN khusus parent
             $table->string('pin_parent')->nullable();
 

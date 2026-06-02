@@ -32,7 +32,6 @@ class ScheduleController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_time' => 'required',
-            'end_time' => 'required',
             'repeat_type' => 'required|in:daily,weekly',
         ]);
 
@@ -42,7 +41,6 @@ class ScheduleController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'repeat_type' => $request->repeat_type,
         ]);
 
@@ -79,7 +77,6 @@ class ScheduleController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_time' => 'required',
-            'end_time' => 'required',
             'repeat_type' => 'required|in:daily,weekly',
         ]);
 
@@ -89,7 +86,6 @@ class ScheduleController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
             'repeat_type' => $request->repeat_type,
         ]);
 
