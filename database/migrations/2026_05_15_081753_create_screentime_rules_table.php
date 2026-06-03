@@ -14,18 +14,9 @@ return new class extends Migration
         Schema::create('screen_time_rules', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('child_id')
+            $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
-
-            // parent yang membuat aturan
-            $table->foreignId('created_by')
-                ->constrained('users')
-                ->onDelete('cascade');
-
-            // jam penggunaan
-            $table->time('start_time');
-            $table->time('end_time');
 
             // batas penggunaan dalam menit
             $table->integer('limit_minutes');

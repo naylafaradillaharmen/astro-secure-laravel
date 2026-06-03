@@ -27,8 +27,7 @@ class ScheduleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'child_id' => 'required|exists:users,id',
-            'created_by' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_time' => 'required',
@@ -36,8 +35,7 @@ class ScheduleController extends Controller
         ]);
 
         $schedule = Schedule::create([
-            'child_id' => $request->child_id,
-            'created_by' => $request->created_by,
+            'user_id' => $request->user_id,
             'title' => $request->title,
             'description' => $request->description,
             'start_time' => $request->start_time,
@@ -72,8 +70,7 @@ class ScheduleController extends Controller
         $schedule = Schedule::findOrFail($id);
 
         $request->validate([
-            'child_id' => 'required|exists:users,id',
-            'created_by' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_time' => 'required',
@@ -81,8 +78,7 @@ class ScheduleController extends Controller
         ]);
 
         $schedule->update([
-            'child_id' => $request->child_id,
-            'created_by' => $request->created_by,
+            'user_id' => $request->user_id,
             'title' => $request->title,
             'description' => $request->description,
             'start_time' => $request->start_time,

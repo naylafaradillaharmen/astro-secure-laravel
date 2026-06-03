@@ -29,19 +29,13 @@ class ScreenTimeRuleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'child_id' => 'required|exists:users,id',
-            'created_by' => 'required|exists:users,id',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'user_id' => 'required|exists:users,id',
             'limit_minutes' => 'required|integer',
             'warning_minutes' => 'required|integer',
         ]);
 
         $rule = ScreenTimeRule::create([
-            'child_id' => $request->child_id,
-            'created_by' => $request->created_by,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
+            'user_id' => $request->user_id,
             'limit_minutes' => $request->limit_minutes,
             'warning_minutes' => $request->warning_minutes,
         ]);
@@ -74,19 +68,13 @@ class ScreenTimeRuleController extends Controller
         $rule = ScreenTimeRule::findOrFail($id);
 
         $request->validate([
-            'child_id' => 'required|exists:users,id',
-            'created_by' => 'required|exists:users,id',
-            'start_time' => 'required',
-            'end_time' => 'required',
+            'user_id' => 'required|exists:users,id',
             'limit_minutes' => 'required|integer',
             'warning_minutes' => 'required|integer',
         ]);
 
         $rule->update([
-            'child_id' => $request->child_id,
-            'created_by' => $request->created_by,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
+            'user_id' => $request->user_id,
             'limit_minutes' => $request->limit_minutes,
             'warning_minutes' => $request->warning_minutes,
         ]);

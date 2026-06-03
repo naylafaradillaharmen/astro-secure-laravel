@@ -20,7 +20,6 @@ class User extends Authenticatable
         'email',
         'password',
         'pin_parent',
-        'parent_id',
     ];
 
     /**
@@ -48,22 +47,6 @@ class User extends Authenticatable
     | Relationships
     |--------------------------------------------------------------------------
     */
-
-    /**
-     * Parent dari child
-     */
-    public function parent()
-    {
-        return $this->belongsTo(User::class, 'parent_id');
-    }
-
-    /**
-     * Child milik parent
-     */
-    public function children()
-    {
-        return $this->hasMany(User::class, 'parent_id');
-    }
 
     /**
      * Schedule yang dibuat parent

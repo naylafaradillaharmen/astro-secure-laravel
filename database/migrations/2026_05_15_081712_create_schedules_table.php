@@ -14,12 +14,7 @@ return new class extends Migration
             $table->id();
 
             // anak yang menjalankan task
-            $table->foreignId('child_id')
-                ->constrained('users')
-                ->onDelete('cascade');
-
-            // parent yang membuat task
-            $table->foreignId('created_by')
+            $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
 

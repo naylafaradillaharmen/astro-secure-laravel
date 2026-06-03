@@ -14,7 +14,7 @@ class TaskSubmission extends Model
      */
     protected $fillable = [
         'schedule_id',
-        'child_id',
+        'user_id',
         'photo_path',
         'note',
         'status',
@@ -40,6 +40,6 @@ class TaskSubmission extends Model
      */
     public function child()
     {
-        return $this->belongsTo(User::class, 'child_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

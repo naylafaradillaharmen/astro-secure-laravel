@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('screen_time_logs', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('child_id')
+            $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
 

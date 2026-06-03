@@ -13,7 +13,7 @@ class ScreenTimeLog extends Model
      * Mass Assignable
      */
     protected $fillable = [
-        'child_id',
+        'user_id',
         'start_time',
         'end_time',
         'duration_minutes',
@@ -31,6 +31,6 @@ class ScreenTimeLog extends Model
      */
     public function child()
     {
-        return $this->belongsTo(User::class, 'child_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -28,7 +28,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'pin_parent' => $request->pin_parent,
-            'parent_id' => $request->parent_id,
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

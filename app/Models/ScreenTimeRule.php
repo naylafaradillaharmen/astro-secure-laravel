@@ -13,10 +13,7 @@ class ScreenTimeRule extends Model
      * Mass Assignable
      */
     protected $fillable = [
-        'child_id',
-        'created_by',
-        'start_time',
-        'end_time',
+        'user_id',
         'limit_minutes',
         'warning_minutes',
     ];
@@ -32,14 +29,6 @@ class ScreenTimeRule extends Model
      */
     public function child()
     {
-        return $this->belongsTo(User::class, 'child_id');
-    }
-
-    /**
-     * Parent yang membuat aturan
-     */
-    public function parent()
-    {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

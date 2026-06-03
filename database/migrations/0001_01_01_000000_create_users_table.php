@@ -20,12 +20,6 @@ return new class extends Migration
             // PIN khusus parent
             $table->string('pin_parent')->nullable();
 
-            // relasi parent untuk child
-            $table->foreignId('parent_id')
-                ->nullable()
-                ->constrained('users')
-                ->onDelete('cascade');
-
             $table->timestamps();
         });
     }

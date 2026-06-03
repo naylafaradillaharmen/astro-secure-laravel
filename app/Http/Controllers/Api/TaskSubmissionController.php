@@ -30,7 +30,7 @@ class TaskSubmissionController extends Controller
     {
         $request->validate([
             'schedule_id' => 'required|exists:schedules,id',
-            'child_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'photo_path' => 'required|string',
             'note' => 'nullable|string',
             'status' => 'required|in:pending,approved,rejected',
@@ -39,7 +39,7 @@ class TaskSubmissionController extends Controller
 
         $submission = TaskSubmission::create([
             'schedule_id' => $request->schedule_id,
-            'child_id' => $request->child_id,
+            'user_id' => $request->user_id,
             'photo_path' => $request->photo_path,
             'note' => $request->note,
             'status' => $request->status,
@@ -75,7 +75,7 @@ class TaskSubmissionController extends Controller
 
         $request->validate([
             'schedule_id' => 'required|exists:schedules,id',
-            'child_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'photo_path' => 'required|string',
             'note' => 'nullable|string',
             'status' => 'required|in:pending,approved,rejected',
@@ -84,7 +84,7 @@ class TaskSubmissionController extends Controller
 
         $submission->update([
             'schedule_id' => $request->schedule_id,
-            'child_id' => $request->child_id,
+            'user_id' => $request->user_id,
             'photo_path' => $request->photo_path,
             'note' => $request->note,
             'status' => $request->status,

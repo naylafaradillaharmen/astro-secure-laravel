@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('child_progress', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('child_id')
+            $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
 

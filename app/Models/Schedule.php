@@ -13,8 +13,7 @@ class Schedule extends Model
      * Mass Assignable
      */
     protected $fillable = [
-        'child_id',
-        'created_by',
+        'user_id',
         'title',
         'description',
         'start_time',
@@ -32,15 +31,7 @@ class Schedule extends Model
      */
     public function child()
     {
-        return $this->belongsTo(User::class, 'child_id');
-    }
-
-    /**
-     * Parent yang membuat task
-     */
-    public function parent()
-    {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

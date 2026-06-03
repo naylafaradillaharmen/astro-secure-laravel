@@ -29,7 +29,7 @@ class ScreenTimeLogController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'child_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'start_time' => 'required',
             'end_time' => 'nullable',
             'duration_minutes' => 'required|integer',
@@ -37,7 +37,7 @@ class ScreenTimeLogController extends Controller
         ]);
 
         $log = ScreenTimeLog::create([
-            'child_id' => $request->child_id,
+            'user_id' => $request->user_id,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'duration_minutes' => $request->duration_minutes,
@@ -72,7 +72,7 @@ class ScreenTimeLogController extends Controller
         $log = ScreenTimeLog::findOrFail($id);
 
         $request->validate([
-            'child_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'start_time' => 'required',
             'end_time' => 'nullable',
             'duration_minutes' => 'required|integer',
@@ -80,7 +80,7 @@ class ScreenTimeLogController extends Controller
         ]);
 
         $log->update([
-            'child_id' => $request->child_id,
+            'user_id' => $request->user_id,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'duration_minutes' => $request->duration_minutes,

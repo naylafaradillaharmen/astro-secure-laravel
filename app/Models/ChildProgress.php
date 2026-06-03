@@ -13,7 +13,7 @@ class ChildProgress extends Model
      * Mass Assignable
      */
     protected $fillable = [
-        'child_id',
+        'user_id',
         'level',
         'streak_days',
         'total_completed_tasks',
@@ -31,6 +31,6 @@ class ChildProgress extends Model
      */
     public function child()
     {
-        return $this->belongsTo(User::class, 'child_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

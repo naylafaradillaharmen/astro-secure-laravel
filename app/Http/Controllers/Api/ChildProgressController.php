@@ -29,7 +29,7 @@ class ChildProgressController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'child_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'level' => 'required|integer',
             'streak_days' => 'required|integer',
             'total_completed_tasks' => 'required|integer',
@@ -37,7 +37,7 @@ class ChildProgressController extends Controller
         ]);
 
         $progress = ChildProgress::create([
-            'child_id' => $request->child_id,
+            'user_id' => $request->user_id,
             'level' => $request->level,
             'streak_days' => $request->streak_days,
             'total_completed_tasks' => $request->total_completed_tasks,
@@ -72,7 +72,7 @@ class ChildProgressController extends Controller
         $progress = ChildProgress::findOrFail($id);
 
         $request->validate([
-            'child_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,id',
             'level' => 'required|integer',
             'streak_days' => 'required|integer',
             'total_completed_tasks' => 'required|integer',
@@ -80,7 +80,7 @@ class ChildProgressController extends Controller
         ]);
 
         $progress->update([
-            'child_id' => $request->child_id,
+            'user_id' => $request->user_id,
             'level' => $request->level,
             'streak_days' => $request->streak_days,
             'total_completed_tasks' => $request->total_completed_tasks,
