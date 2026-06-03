@@ -8,38 +8,27 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    /**
-     * Display all schedules
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = Schedule::with(['child', 'parent'])->latest()->get();
-
-        return response()->json([
-            'message' => 'List schedules',
-            'data' => $schedules,
-        ]);
+        return Schedule::where('user_id', $request->user()->id)
+            ->latest('schedule_id')
+            ->get();
     }
 
-    /**
-     * Store new schedule
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'start_time' => 'required',
-            'repeat_type' => 'required|in:daily,weekly',
+            'start_time' => 'required|date_format:H:i',
         ]);
 
         $schedule = Schedule::create([
-            'user_id' => $request->user_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_time' => $request->start_time,
-            'repeat_type' => $request->repeat_type,
+            'user_id' => $request->user()->id,
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'start_time' => $validated['start_time'],
+            'is_active' => true,
         ]);
 
         return response()->json([
@@ -48,42 +37,27 @@ class ScheduleController extends Controller
         ], 201);
     }
 
-    /**
-     * Show detail schedule
-     */
-    public function show(string $id)
+    public function show(Request $request, $id)
     {
-        $schedule = Schedule::with(['child', 'parent'])
+        $schedule = Schedule::where('user_id', $request->user()->id)
             ->findOrFail($id);
 
-        return response()->json([
-            'message' => 'Detail schedule',
-            'data' => $schedule,
-        ]);
+        return response()->json($schedule);
     }
 
-    /**
-     * Update schedule
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $schedule = Schedule::findOrFail($id);
+        $schedule = Schedule::where('user_id', $request->user()->id)
+            ->findOrFail($id);
 
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'title' => 'required|string|max:255',
+        $validated = $request->validate([
+            'title' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'start_time' => 'required',
-            'repeat_type' => 'required|in:daily,weekly',
+            'start_time' => 'sometimes|date_format:H:i',
+            'is_active' => 'sometimes|boolean',
         ]);
 
-        $schedule->update([
-            'user_id' => $request->user_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'start_time' => $request->start_time,
-            'repeat_type' => $request->repeat_type,
-        ]);
+        $schedule->update($validated);
 
         return response()->json([
             'message' => 'Schedule updated successfully',
@@ -91,12 +65,10 @@ class ScheduleController extends Controller
         ]);
     }
 
-    /**
-     * Delete schedule
-     */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
-        $schedule = Schedule::findOrFail($id);
+        $schedule = Schedule::where('user_id', $request->user()->id)
+            ->findOrFail($id);
 
         $schedule->delete();
 

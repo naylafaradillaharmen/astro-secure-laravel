@@ -3,42 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Schedule extends Model
 {
-    use HasFactory;
+    protected $primaryKey = 'schedule_id';
 
-    /**
-     * Mass Assignable
-     */
+    public $timestamps = false;
+
     protected $fillable = [
         'user_id',
         'title',
         'description',
         'start_time',
-        'repeat_type',
+        'is_active',
     ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | Relationships
-    |--------------------------------------------------------------------------
-    */
+    protected $casts = [
+        'is_active' => 'boolean',
+        'start_time' => 'datetime:H:i:s',
+    ];
 
-    /**
-     * Anak yang menjalankan task
-     */
-    public function child()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * Submission dari schedule ini
-     */
-    public function taskSubmissions()
-    {
-        return $this->hasMany(TaskSubmission::class);
+        return $this->belongsTo(User::class);
     }
 }
