@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\TaskSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskSubmissionController extends Controller
 {
@@ -30,20 +31,20 @@ class TaskSubmissionController extends Controller
     {
         $request->validate([
             'schedule_id' => 'required|exists:schedules,id',
-            'user_id' => 'required|exists:users,id',
-            'photo_path' => 'required|string',
+            'photo' => 'required|image|max:2048',
             'note' => 'nullable|string',
-            'status' => 'required|in:pending,approved,rejected',
-            'submitted_at' => 'required',
         ]);
+
+        $photoPath = $request->file('photo')
+            ->store('task_submissions', 'public');
 
         $submission = TaskSubmission::create([
             'schedule_id' => $request->schedule_id,
-            'user_id' => $request->user_id,
-            'photo_path' => $request->photo_path,
+            'user_id' => Auth::id(),
+            'photo_path' => $photoPath,
             'note' => $request->note,
-            'status' => $request->status,
-            'submitted_at' => $request->submitted_at,
+            'status' => 'pending',
+            'submitted_at' => now(),
         ]);
 
         return response()->json([
@@ -74,21 +75,11 @@ class TaskSubmissionController extends Controller
         $submission = TaskSubmission::findOrFail($id);
 
         $request->validate([
-            'schedule_id' => 'required|exists:schedules,id',
-            'user_id' => 'required|exists:users,id',
-            'photo_path' => 'required|string',
-            'note' => 'nullable|string',
-            'status' => 'required|in:pending,approved,rejected',
-            'submitted_at' => 'required',
+            'status' => 'required|in:approved,rejected',
         ]);
 
         $submission->update([
-            'schedule_id' => $request->schedule_id,
-            'user_id' => $request->user_id,
-            'photo_path' => $request->photo_path,
-            'note' => $request->note,
             'status' => $request->status,
-            'submitted_at' => $request->submitted_at,
         ]);
 
         return response()->json([
