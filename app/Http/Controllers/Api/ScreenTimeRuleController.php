@@ -13,7 +13,7 @@ class ScreenTimeRuleController extends Controller
      */
     public function index()
     {
-        $rules = ScreenTimeRule::with(['child', 'parent'])
+        $rules = ScreenTimeRule::with('child')
             ->latest()
             ->get();
 
@@ -30,8 +30,8 @@ class ScreenTimeRuleController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'limit_minutes' => 'required|integer',
-            'warning_minutes' => 'required|integer',
+            'limit_minutes' => 'required|integer|min:1',
+            'warning_minutes' => 'required|integer|min:1',
         ]);
 
         $rule = ScreenTimeRule::create([
@@ -51,7 +51,7 @@ class ScreenTimeRuleController extends Controller
      */
     public function show(string $id)
     {
-        $rule = ScreenTimeRule::with(['child', 'parent'])
+        $rule = ScreenTimeRule::with('child')
             ->findOrFail($id);
 
         return response()->json([
@@ -69,8 +69,8 @@ class ScreenTimeRuleController extends Controller
 
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'limit_minutes' => 'required|integer',
-            'warning_minutes' => 'required|integer',
+            'limit_minutes' => 'required|integer|min:1',
+            'warning_minutes' => 'required|integer|min:1',
         ]);
 
         $rule->update([

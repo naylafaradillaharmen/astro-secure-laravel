@@ -14,16 +14,10 @@ return new class extends Migration
         Schema::create('screen_time_rules', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
 
-            // batas penggunaan dalam menit
             $table->integer('limit_minutes');
-
-            // peringatan sebelum waktu habis
-            $table->integer('warning_minutes')
-                ->default(5);
+            $table->integer('warning_minutes');
 
             $table->timestamps();
         });

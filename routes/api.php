@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     |--------------------------------------------------------------------------
     */
 
+    Route::get('schedules/active', [ScheduleController::class, 'getActive']);
+    Route::post('schedules/active', [ScheduleController::class, 'setActive']);
     Route::apiResource('schedules', ScheduleController::class);
 
     /*

@@ -20,6 +20,7 @@ class User extends Authenticatable
         'email',
         'password',
         'pin_parent',
+        'active_schedule_type',
     ];
 
     /**
@@ -53,7 +54,7 @@ class User extends Authenticatable
      */
     public function schedules()
     {
-        return $this->hasMany(Schedule::class, 'created_by');
+        return $this->hasMany(Schedule::class, 'user_id');
     }
 
     /**
@@ -83,8 +84,8 @@ class User extends Authenticatable
     /**
      * Child progress
      */
-    public function childProgress()
+    public function progress()
     {
-        return $this->hasOne(ChildProgress::class, 'child_id');
+        return $this->hasOne(ChildProgress::class);
     }
 }

@@ -30,18 +30,14 @@ class ChildProgressController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'level' => 'required|integer',
-            'streak_days' => 'required|integer',
-            'total_completed_tasks' => 'required|integer',
-            'last_activity_date' => 'nullable|date',
         ]);
 
         $progress = ChildProgress::create([
             'user_id' => $request->user_id,
-            'level' => $request->level,
-            'streak_days' => $request->streak_days,
-            'total_completed_tasks' => $request->total_completed_tasks,
-            'last_activity_date' => $request->last_activity_date,
+            'level' => 1,
+            'streak_days' => 0,
+            'total_completed_tasks' => 0,
+            'last_activity_date' => now(),
         ]);
 
         return response()->json([
@@ -72,7 +68,6 @@ class ChildProgressController extends Controller
         $progress = ChildProgress::findOrFail($id);
 
         $request->validate([
-            'user_id' => 'required|exists:users,id',
             'level' => 'required|integer',
             'streak_days' => 'required|integer',
             'total_completed_tasks' => 'required|integer',
@@ -80,7 +75,6 @@ class ChildProgressController extends Controller
         ]);
 
         $progress->update([
-            'user_id' => $request->user_id,
             'level' => $request->level,
             'streak_days' => $request->streak_days,
             'total_completed_tasks' => $request->total_completed_tasks,

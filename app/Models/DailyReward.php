@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DailyReward extends Model
 {
-    protected $primaryKey = 'reward_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'created_by',

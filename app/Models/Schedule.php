@@ -12,6 +12,8 @@ class Schedule extends Model
 
     protected $fillable = [
         'user_id',
+        'type',
+        'activity_order',
         'title',
         'description',
         'start_time',
@@ -20,11 +22,18 @@ class Schedule extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
+        'activity_order' => 'integer',
         'start_time' => 'datetime:H:i:s',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function todaySubmission()
+    {
+        return $this->hasOne(TaskSubmission::class, 'schedule_id')
+            ->whereDate('submitted_at', today());
     }
 }
