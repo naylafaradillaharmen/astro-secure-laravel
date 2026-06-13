@@ -21,26 +21,39 @@ class User extends Authenticatable
         'password',
         'pin_parent',
         'active_schedule_type',
+        'child_name',
+        'child_age',
+        'parent_name',
+        'parent_age',
+        'profile_image',
     ];
 
-    /**
-     * Hidden Attributes
-     */
     protected $hidden = [
         'password',
         'remember_token',
-        'pin_parent',
     ];
 
-    /**
-     * Attribute Casting
-     */
+    protected $appends = [
+        'profile_image_url',
+    ];
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'child_age' => 'integer',
+            'parent_age' => 'integer',
         ];
+    }
+
+    public function getProfileImageUrlAttribute(): ?string
+    {
+        if (!$this->profile_image) {
+            return null;
+        }
+
+        return asset('storage/' . $this->profile_image);
     }
 
     /*
@@ -62,7 +75,7 @@ class User extends Authenticatable
      */
     public function taskSubmissions()
     {
-        return $this->hasMany(TaskSubmission::class, 'child_id');
+        return $this->hasMany(TaskSubmission::class, 'user_id');
     }
 
     /**
@@ -70,7 +83,7 @@ class User extends Authenticatable
      */
     public function screenTimeRules()
     {
-        return $this->hasMany(ScreenTimeRule::class, 'child_id');
+        return $this->hasMany(ScreenTimeRule::class, 'user_id');
     }
 
     /**
@@ -78,7 +91,7 @@ class User extends Authenticatable
      */
     public function screenTimeLogs()
     {
-        return $this->hasMany(ScreenTimeLog::class, 'child_id');
+        return $this->hasMany(ScreenTimeLog::class, 'user_id');
     }
 
     /**

@@ -30,7 +30,7 @@ class TaskSubmissionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'schedule_id' => 'required|exists:schedules,id',
+            'schedule_id' => 'required|exists:schedules,schedule_id',
             'photo' => 'required|image|max:2048',
             'note' => 'nullable|string',
         ]);
