@@ -172,11 +172,18 @@ class ScheduleController extends Controller
         }
 
         // Map is_completed based on today's submission status for the child
+        // Only non-rejected submissions count as completed (pending/approved)
+        // so child can resubmit after parent rejection
         $data = $schedules->map(function ($schedule) use ($user) {
-            // Check submission for today
+            // Check submission for today that is not rejected
+            // AND submitted at or after the schedule's current start_time,
+            // so that if parent changes schedule time, old submissions
+            // don't count against the new time slot
             $isCompleted = \App\Models\TaskSubmission::where('schedule_id', $schedule->schedule_id)
                 ->where('user_id', $user->id)
                 ->whereDate('submitted_at', \Carbon\Carbon::today())
+                ->where('status', '!=', 'rejected')
+                ->whereTime('submitted_at', '>=', $schedule->getRawOriginal('start_time'))
                 ->exists();
 
             $schedule->is_completed = $isCompleted;

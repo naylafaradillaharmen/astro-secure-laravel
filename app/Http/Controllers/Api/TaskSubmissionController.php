@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChildProgress;
 use App\Models\TaskSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +82,20 @@ class TaskSubmissionController extends Controller
         $submission->update([
             'status' => $request->status,
         ]);
+
+        if ($request->status === 'approved') {
+            $progress = ChildProgress::firstOrCreate(
+                ['user_id' => $submission->user_id],
+                [
+                    'level' => 1,
+                    'streak_days' => 0,
+                    'total_completed_tasks' => 0,
+                    'last_activity_date' => now(),
+                ],
+            );
+            $progress->increment('total_completed_tasks');
+            $progress->update(['last_activity_date' => now()]);
+        }
 
         return response()->json([
             'message' => 'Task submission updated successfully',

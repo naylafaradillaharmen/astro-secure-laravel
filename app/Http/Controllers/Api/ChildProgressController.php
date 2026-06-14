@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ChildProgress;
+use App\Models\TaskSubmission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChildProgressController extends Controller
 {
@@ -13,9 +15,20 @@ class ChildProgressController extends Controller
      */
     public function index()
     {
+        $userId = Auth::id();
+
+        $actualCount = TaskSubmission::where('user_id', $userId)
+            ->where('status', 'approved')
+            ->count();
+
         $progress = ChildProgress::with('child')
+            ->where('user_id', $userId)
             ->latest()
             ->get();
+
+        if ($progress->isNotEmpty()) {
+            $progress->first()->total_completed_tasks = $actualCount;
+        }
 
         return response()->json([
             'message' => 'List child progress',
