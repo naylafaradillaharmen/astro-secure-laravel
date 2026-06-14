@@ -43,8 +43,8 @@ class ProfileController extends Controller
         ]);
 
         if ($request->hasFile('profile_image')) {
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
+            if ($user->getRawOriginal('profile_image')) {
+                Storage::disk('public')->delete($user->getRawOriginal('profile_image'));
             }
 
             $data['profile_image'] = $request->file('profile_image')

@@ -37,6 +37,15 @@ class User extends Authenticatable
         'profile_image_url',
     ];
 
+    public function getProfileImageAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return request()->getSchemeAndHttpHost() . '/storage/' . $value;
+    }
+
     protected function casts(): array
     {
         return [
@@ -49,11 +58,13 @@ class User extends Authenticatable
 
     public function getProfileImageUrlAttribute(): ?string
     {
-        if (!$this->profile_image) {
+        $original = $this->getRawOriginal('profile_image');
+
+        if (!$original) {
             return null;
         }
 
-        return asset('storage/' . $this->profile_image);
+        return request()->getSchemeAndHttpHost() . '/storage/' . $original;
     }
 
     /*
